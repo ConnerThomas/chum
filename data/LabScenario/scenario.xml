@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<scenario name="Making a Sterile Aliquot" color="FF9BC6F3" stepcount="3">
+
+
+<step1 name="Put on your gloves" img="step1.png">
+    <item type="in" x="20" y="23" size="32"  color="FF000000" item="glove" timer="_total_" autotrigger="true">Put on a set of sterile gloves</item>
+    <item type="text" x="25" y="30" size="30" color="FF000000">(go ahead and show them to the camera)</item>
+ </step1>
+
+
+  <step2 name="Gather Materials" img="step2.png">
+    <item type="text" x="15" y="20" size="35" color="FF000000">Collect the following and place on work table:</item>
+    <item type="in" x="20" y="30" size="32"  color="FF000000" item="Rack Alone">Falcon tube holder</item>
+    <item type="in"  x="20" y="37" size="32" color="FF000000" item="Tube Capped">50mL falcon tube (sterile, capped)</item>
+    <item type="in" x="20" y="44" size="32"  color="FF000000" item="bottle lidded">500ml bottle of "Aqua Green"</item>
+    <item type="in" x="20" y="51" size="32"  color="FF000000" item="pen">Felt tipped pen</item>
+  </step2>
+
+
+  <step3 name="Open the tube and bottle" img="lidstep.png">
+    <item type="in" x="20" y="25" size="35" color="FF000000" item="Rack with lidded tube">Place the tube into the rack</item> 
+    <item type="in" x="20" y="32" size="35"  timer="_flaskopen_" color="FF000000" item="Rack with uncapped tube,tubelid USD,tubelid RSU">Unscrew and remove the tube's lid</item> 
+    <item type="in" x="20" y="39" size="35" timer="_bottleopen_" color="FF000000" item="bottle,bottlelid USD,bottlelid RSU">Unscrew and remove the bottle's lid</item> 
+
+    <item type="text" x="25" y="46" size="32" color="FF000000">Place the lids upside down on the</item> 
+    <item type="text" x="25" y="51" size="32" color="FF000000">workbench to avoid contamination</item> 
+  <item type="warning" flag="badlid" x="20" y="61" size="32" color="FFFFAA00" item="tubelid RSU,bottlelid RSU">Setting lids right side up can infect them!</item> 
+  </step3>
+
+<step4 name="Pour the aliquot" img="step3.png">
+ <item type="text" x="15" y="20" size="35" color="FF000000">Now fill the flask and recap the flask and bottle</item>
+    <item type="in" x="20" y="30" size="32"  matchlim="0.8" color="FF000000" item="pouring">Pour some Aqua Green into flask</item>
+    <item type="in" x="20" y="37" size="32"   timer="_bottleopen_" color="FF000000" item="bottle lidded">Recap the bottle</item>
+  <item type="in" x="20" y="44" size="35"  timer="_flaskopen_" color="FF000000" item="Rack with lidded tube">Recap the flask</item>
+  </step4>
+
+<step5 name="Label flask and return supplies" img="step3.png">
+ <item type="text" x="20" y="25" size="35" color="FF000000">Write a descriptive label on the flask</item>
+ <item type="text" x="20" y="32" size="35" color="FF000000">(include date and your initials)</item>
+<item type="out" x="20" y="41" size="35"  color="FF000000" item="bottle lidded">Place Aqua Green bottle back in supplies</item>
+ <item type="out" x="20" y="48" size="35"  color="FF000000" item="Pen" timer="_total_">Place pen back in supplies</item>
+  </step5>
+
+<step6 name="Congrats! You are finished!" img="finalStep.png">
+    <item type="text" x="10" y="20" size="32" color="FF000000">
+      The entire protocol took _total_ seconds  
+    </item>
+    <item type="text" x="10" y="26" size="32" color="FF000000">
+      The bottle of AquaGreen was open for _bottleopen_ seconds  
+    </item>
+    <item type="text" x="10" y="32" size="32" color="FF000000">
+      The flask was open for _flaskopen_ seconds  
+    </item>
+    
+    <item type="text" x="10" y="40" size="32" color="FF00BB00">
+      Best: Sensitive liquids open for less than 30 seconds 
+    </item>
+    <item type="text" x="5" y="46" size="32" color="FFBBBB00">
+      Acceptable: Sensitive liquids open for less than 60 seconds 
+    </item>
+        <item type="text" flag="badlid" x="15" y="55" size="32" color="FFCC0000">
+      !!! You placed one of the lids wet-side down !!!
+    </item>
+    <item type="text" flag="badlid" x="15" y="61" size="32" color="FFCC0000">
+         This leads to infection in sterile media 
+    </item>
+  </step6>
+
+
+</scenario>

@@ -1,0 +1,71 @@
+
+ActivityFromVision Demo
+=======================
+
+This is a demo that can do object recognition and hand tracking (and
+a primitive swipe gesture recognition) with a top-down web cam. It is
+very simple and has lots of hardcoding and corner cutting. Those include:
+  - Assumes a single-color, stavble background (which it captures at the
+    start of each execution.
+    
+  - Uses color histogram matching to recognize objects. So there can really
+    only be 6-10 objects and they all need to be pretty distinct colors.
+    
+  - Assumes people are wearing single-color gloves.
+  
+  - Assumes the lighting is really consistent and creates few specular highlights/reflections
+  
+  - There are lots of hardcoded paths and options. Most all are in the top of RTVisionDemo.
+    For example, if you want to change where the object models live or if you want to run live
+    or from a replay of canned images, there are variables to edit. It could use a nice little gui.
+    (Something for Conner to fix?)
+    
+*** Useful entry points ***
+
+RTVisionDemo:
+	Currently has a bunch of variables at the top of the class that will change behavior (like running live or not, 
+	where to get reply from, etc.)  This class pulls up a GUI that will track hands and recognize objects.
+
+Scenario:
+    Superclass of RTVisionDemo, this is the real demo that walks the user through a scenario using the scenario
+    folder (described below). These are the user controls:
+    
+    's': Create an image snapshot of the current segmented objects. (saved to the object database under object name 'unknown')
+    '`': Pause or unpause playback (if playing back canned images/movie)
+    '1': Shows the camera view. (Not a toggle, actually scrolls through a few views)
+    '2' and '3': make the camera window bigger or smaller
+    '4' and '5': make the scenario window bigger or smaller
+  
+RGBRecorder:
+	A program to capture the video to a series of images (and maybe movie too?)
+	 
+  
+What the data files/folders do:
+	replayImagePath: This is the folder that contains the images to replay (as if they were coming from the camera). 
+		The images in the folders should be pngs, numbered started with 1 in 5 digits: 00001.png,00002.png,etc.
+	
+	knownObjectFolder:  A folder with a subfolder for each known object. Name of the object is the subfolder
+	    name and in that subfolder are images of that object. The images are pairings of a color image of the
+	    object and a B&W mask that eliminates the background. (They are horizontally stacked). See the examples, it will
+	    be pretty obvious.  
+	    
+	gloveImagePath:  An image that is a patch of the glove (in the demo lighting conditions).  This image will be sampled
+	    to figure out what colors make up the glove.
+	    
+	scenarioPath: The location of the scenario to work through. Only used by Scenario object. It's a folder with:
+	   scenario.xml:  Describes the scenario steps. See the check in example for syntax
+	   img:  A subfolder. Any images referred to in scenario.xml will be assumed to be in this subfolder.     
+    
+    
+Obvious things to fix:
+
+ - Make a gui to choose live/replay and what image/movie to play from
+ 
+ - Make some of the hardcoded thresholds dynamic. (maybe settable in the GUI?)
+   For example, segmentation happens with some dilate, thresholding and eroding: 
+ 		roiCV.dilate();
+		roiCV.dilate();
+		roiCV.erode();
+		roiCV.threshold(30)  
+	This could be totally dynamic. (either a slider the user adjusts (and can see the results of) or even self-tuning
+	the beginning of execution.
