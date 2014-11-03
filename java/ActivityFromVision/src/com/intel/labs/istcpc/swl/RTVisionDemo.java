@@ -80,16 +80,17 @@ public class RTVisionDemo extends PApplet {
 
 	boolean live = false;  								// This should be set in a GUI
 	boolean replayFromImages = true; 					// This should be set in a GUI
-	String replayVideo = "c:/tmp/m2.mp4"; 				// This should be set in a GUI
-	String replayImagePath = "c:/tmp/frames_w_error"; 	// This should be set in a GUI
+	String replayVideo = "/Users/xkcd/Documents/workspace/Chum/data/example captures/danielVideo.mp4"; 				// This should be set in a GUI
+	String replayImagePath = "/Users/xkcd/Documents/workspace/Chum/data/example captures/frames_w_error"; 	// This should be set in a GUI
 	long nextImageNumber = 1;
-	String knownObjectFolder = "c:/tmp/objects"; 		// This should be set in a GUI
-	String gloveImagePath = "c:/tmp/ignore.png"; 		// This should be set in a GUI
+	String knownObjectFolder = "/Users/xkcd/Documents/workspace/Chum/data/objects"; 		// This should be set in a GUI
+	String gloveImagePath = "/Users/xkcd/Documents/workspace/Chum/data/ignore.png"; 		// This should be set in a GUI
 	
 	double[]  ignoreColorHist;
 	double    ignoreHue; // if there is 1 color to ignore, what is it?
 	
 	public void setup() {
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		papp = this; // So others will be able to get at me and use opencv functions
 		rand = new Random();
 		rand.setSeed(new Date().getTime());
