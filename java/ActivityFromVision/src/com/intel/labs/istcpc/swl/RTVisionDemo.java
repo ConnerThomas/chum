@@ -81,7 +81,7 @@ public class RTVisionDemo extends PApplet {
 	boolean live = false;  								// This should be set in a GUI
 	boolean replayFromImages = true; 					// This should be set in a GUI
 	String replayVideo = "/Users/xkcd/Documents/workspace/Chum/data/example captures/danielVideo.mp4"; 				// This should be set in a GUI
-	String replayImagePath = "/Users/xkcd/Documents/workspace/Chum/data/example captures/frames_w_error"; 	// This should be set in a GUI
+	String replayImagePath = "/Users/xkcd/Documents/workspace/Chum/data/example captures/frames_small"; 	// This should be set in a GUI
 	long nextImageNumber = 1;
 	String knownObjectFolder = "/Users/xkcd/Documents/workspace/Chum/data/objects"; 		// This should be set in a GUI
 	String gloveImagePath = "/Users/xkcd/Documents/workspace/Chum/data/ignore.png"; 		// This should be set in a GUI
@@ -214,6 +214,9 @@ public class RTVisionDemo extends PApplet {
 					nextImageNumber += 1;
 				}
 				rgbImage = this.loadImage(replayImagePath + File.separator + s + ".png"); 
+				if (rgbImage == null) {
+					return false;
+				}
 			} else {
 				// From a video that's already playing
 				if (!frameReady) {
@@ -251,7 +254,7 @@ public class RTVisionDemo extends PApplet {
 
 	private void learnBackground() {
 		if (!getNextImage()) {
-			return;
+			System.exit(1);
 		}
 		
 		//*** Initialize some things on frame #1 
@@ -297,7 +300,7 @@ public class RTVisionDemo extends PApplet {
 
 	private boolean trackObjects() {
 		if (!getNextImage()) {
-			return false;
+			System.exit(1);
 		}
 		
 		if (displayMsgFor > 0) {
